@@ -9,14 +9,14 @@ const Hero = () => {
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef(null);
 
-  // Auto-play: Change slide every 3 seconds with pause on hover
+  // Auto-play: Change slide every 5 seconds with pause on hover
   useEffect(() => {
     if (isPaused) return;
 
     timerRef.current = setInterval(() => {
       setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 3000);
+    }, 5000);
 
     return () => {
       if (timerRef.current) {
@@ -43,7 +43,7 @@ const Hero = () => {
   const slideVariants = {
     enter: {
       opacity: 0,
-      scale: 1.05
+      scale: 1.03
     },
     center: {
       zIndex: 1,
@@ -53,18 +53,19 @@ const Hero = () => {
     exit: {
       zIndex: 0,
       opacity: 0,
-      scale: 0.95
+      scale: 1.03
     }
   };
 
   return (
     <section 
-      className="relative h-screen w-full overflow-hidden bg-black"
+      className="relative h-screen w-full overflow-hidden"
+      style={{ backgroundColor: '#0a0a0a' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Background Image with Smooth Transitions */}
-      <AnimatePresence initial={false} mode="wait">
+      {/* Background Image with Smooth Transitions - No Black Flash */}
+      <AnimatePresence initial={false}>
         <motion.div
           key={`bg-${currentSlide}`}
           variants={slideVariants}
@@ -72,8 +73,8 @@ const Hero = () => {
           animate="center"
           exit="exit"
           transition={{
-            opacity: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-            scale: { duration: 2, ease: [0.22, 1, 0.36, 1] }
+            opacity: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+            scale: { duration: 3, ease: [0.22, 1, 0.36, 1] }
           }}
           className="absolute inset-0 will-change-transform"
         >
@@ -96,54 +97,54 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`content-${currentSlide}`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Category */}
               <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "60px" }}
-                transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "60px", opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="h-1 bg-amber-500 mb-6"
               />
               
               <motion.p 
-                className="text-white/80 text-sm md:text-base mb-4 tracking-wider uppercase"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.25, duration: 0.4 }}
+                className="text-white/80 text-xs md:text-base mb-3 md:mb-4 tracking-wider uppercase"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
                 {currentData.category}
               </motion.p>
 
               {/* Main Title */}
               <motion.h1 
-                className="text-white text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight whitespace-pre-line"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="text-white text-3xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 leading-tight whitespace-pre-line"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 1, ease: [0.22, 1, 0.36, 1] }}
               >
                 {currentData.title}
               </motion.h1>
 
               {/* Description */}
               <motion.p 
-                className="text-white/70 text-base md:text-lg max-w-md mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
+                className="text-white/70 text-sm md:text-lg max-w-md mb-8 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
                 {currentData.description}
               </motion.p>
 
-              {/* CTA Button */}
+              {/* CTA Button - Hidden on mobile */}
               <motion.button
-                className="flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-medium transition-colors duration-200"
-                initial={{ opacity: 0, y: 15 }}
+                className="hidden md:flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-medium transition-colors duration-200"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: 1.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -155,74 +156,96 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Foreground Cards - Bottom Right - Smaller & Smoother */}
-      <div className="absolute bottom-24 right-0 left-0 lg:left-auto lg:right-12 z-20 overflow-hidden pointer-events-none">
+      {/* Foreground Cards - Arc Formation on Mobile, Straight Line on Desktop */}
+      <div className="absolute bottom-20 md:bottom-24 right-0 left-0 lg:left-auto lg:right-12 z-20 overflow-visible pointer-events-none">
         <div className="flex justify-center lg:justify-end px-4 lg:px-0">
-          <div className="relative w-full max-w-3xl lg:max-w-[700px]">
+          <div className="relative w-full max-w-3xl lg:max-w-[700px]" style={{ height: window.innerWidth < 768 ? '140px' : 'auto' }}>
             <AnimatePresence mode="wait">
               <motion.div 
                 key={`cards-row-${currentSlide}`}
-                className="flex gap-4"
+                className="flex gap-3 md:gap-4 justify-center lg:justify-end items-end md:items-center"
+                style={{
+                  position: window.innerWidth < 768 ? 'relative' : 'static',
+                  height: window.innerWidth < 768 ? '100%' : 'auto'
+                }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ 
-                  duration: 0.4, 
+                  duration: 0.6, 
                   ease: [0.22, 1, 0.36, 1]
                 }}
               >
-                {foregroundCards.map((card, index) => (
-                  <motion.div
-                    key={`card-${currentSlide}-${index}`}
-                    className="flex-shrink-0 pointer-events-auto"
-                    style={{ width: '140px' }}
-                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                    animate={{ 
-                      opacity: 1,
-                      y: 0, 
-                      scale: 1
-                    }}
-                    transition={{
-                      delay: 0.2 + (index * 0.08),
-                      duration: 0.5,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                  >
-                    <motion.div 
-                      className="relative h-52 rounded-xl overflow-hidden shadow-xl cursor-pointer group will-change-transform"
-                      onClick={() => index === 0 && paginate(1)}
-                      whileHover={{ 
-                        scale: 1.08,
-                        y: -8,
-                        transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+                {foregroundCards.map((card, index) => {
+                  // Calculate arc position for mobile
+                  const isMobile = window.innerWidth < 768;
+                  const totalCards = foregroundCards.length;
+                  const centerIndex = (totalCards - 1) / 2;
+                  const distanceFromCenter = Math.abs(index - centerIndex);
+                  const arcHeight = isMobile ? distanceFromCenter * 25 : 0; // Pixels to raise/lower
+                  
+                  return (
+                    <motion.div
+                      key={`card-${currentSlide}-${index}`}
+                      className="flex-shrink-0 pointer-events-auto"
+                      style={{ 
+                        width: isMobile ? '70px' : '140px',
+                        position: isMobile ? 'relative' : 'static',
+                        bottom: isMobile ? `${arcHeight}px` : 'auto',
+                        marginBottom: isMobile ? 0 : 'auto'
                       }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                      initial={{ opacity: 0, y: 40, scale: 0.8 }}
+                      animate={{ 
+                        opacity: 1,
+                        y: 0, 
+                        scale: 1
+                      }}
+                      transition={{
+                        delay: 0.4 + (index * 0.1),
+                        duration: 0.7,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
                     >
-                      {/* Card Image */}
-                      <img 
-                        src={card.image} 
-                        alt={card.subtitle}
-                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 will-change-transform"
-                        loading="lazy"
-                      />
-                      
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                      
-                      {/* Card Text */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3">
-                        <p className="text-white/70 text-[10px] mb-0.5 uppercase tracking-wide">{card.title}</p>
-                        <h3 className="text-white text-sm font-bold leading-tight">{card.subtitle}</h3>
-                      </div>
+                      <motion.div 
+                        className="relative overflow-hidden shadow-xl cursor-pointer group will-change-transform rounded-xl"
+                        style={{
+                          width: isMobile ? '70px' : '140px',
+                          height: isMobile ? '100px' : '208px'
+                        }}
+                        onClick={() => index === 0 && paginate(1)}
+                        whileHover={{ 
+                          scale: isMobile ? 1.15 : 1.08,
+                          y: isMobile ? -6 : -8,
+                          transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+                        }}
+                        whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+                      >
+                        {/* Card Image */}
+                        <img 
+                          src={card.image} 
+                          alt={card.subtitle}
+                          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 will-change-transform"
+                          loading="lazy"
+                        />
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                        
+                        {/* Card Text - Hidden on mobile */}
+                        <div className="absolute bottom-0 left-0 right-0 p-3 hidden md:block">
+                          <p className="text-white/70 text-[10px] mb-0.5 uppercase tracking-wide">{card.title}</p>
+                          <h3 className="text-white text-sm font-bold leading-tight">{card.subtitle}</h3>
+                        </div>
 
-                      {/* Glossy Hover Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Border Glow */}
-                      <div className="absolute inset-0 rounded-xl border border-white/20" />
+                        {/* Glossy Hover Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        
+                        {/* Border Glow */}
+                        <div className="absolute inset-0 rounded-xl border border-white/30 md:border-white/20" />
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </motion.div>
             </AnimatePresence>
           </div>
