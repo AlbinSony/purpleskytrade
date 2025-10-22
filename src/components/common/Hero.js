@@ -59,8 +59,11 @@ const Hero = () => {
 
   return (
     <section 
-      className="relative h-screen w-full overflow-hidden"
-      style={{ backgroundColor: '#0a0a0a' }}
+      className="relative w-full overflow-hidden"
+      style={{ 
+        backgroundColor: '#0a0a0a',
+        height: window.innerWidth < 768 ? '85vh' : '100vh'
+      }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

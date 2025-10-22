@@ -1,5 +1,7 @@
 import React from 'react';
 import Hero from '../components/common/Hero';
+import { motion } from 'framer-motion';
+import { FaLeaf, FaGlobeAmericas, FaAward, FaUsers } from 'react-icons/fa';
 
 
 const Home = () => {
@@ -8,6 +10,161 @@ const Home = () => {
         <main>
             <section id="hero">
                 <Hero />
+            </section>
+
+            {/* About Us Section with Video Background */}
+            <section id="about-us" className="relative min-h-screen flex items-center overflow-hidden">
+                {/* Video Background */}
+                <div className="absolute inset-0 z-0">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="w-full h-full object-cover"
+                    >
+                        <source src={`${process.env.PUBLIC_URL}/images/aboutbg.mp4`} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                {/* Content */}
+                <div className="container relative z-10 py-20 md:py-32">
+                    <div className="max-w-7xl mx-auto px-4 md:px-6">
+                        {/* Section Header */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="text-center mb-16 md:mb-20"
+                        >
+                            <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: '80px' }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3, duration: 0.8 }}
+                                className="h-1 bg-amber-500 mx-auto mb-6"
+                            />
+                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+                                About <span className="text-amber-500">Priple Sky Trade</span>
+                            </h2>
+                            <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+                                Your Global Partner in Premium Value-Added Processed Foods
+                            </p>
+                        </motion.div>
+
+                        {/* Main Content Grid */}
+                        <div className="grid md:grid-cols-2 gap-12 md:gap-16 mb-20">
+                            {/* Left Column - Story */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.4, duration: 0.8 }}
+                            >
+                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">Our Story</h3>
+                                <div className="space-y-4 text-white/80 leading-relaxed">
+                                    <p>
+                                        Founded with a vision to bridge authentic flavors with global markets, Priple Sky Trade has emerged as a 
+                                        leading name in the food export industry. We specialize in bringing premium value-added processed foods 
+                                        from traditional recipes to modern kitchens worldwide.
+                                    </p>
+                                    <p>
+                                        Our journey began with a simple mission: to preserve the authenticity of traditional cuisines while 
+                                        meeting international quality standards. Today, we proudly serve over 25 countries with a diverse range 
+                                        of products that combine heritage with innovation.
+                                    </p>
+                                    <p>
+                                        From IQF frozen flatbreads to gourmet pickles, every product in our portfolio reflects our commitment 
+                                        to quality, taste, and consistency. We work closely with certified manufacturers and maintain rigorous 
+                                        quality control throughout our supply chain.
+                                    </p>
+                                </div>
+                            </motion.div>
+
+                            {/* Right Column - Values */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.6, duration: 0.8 }}
+                            >
+                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">Our Values</h3>
+                                <div className="space-y-6">
+                                    {[
+                                        {
+                                            icon: <FaAward className="text-3xl" />,
+                                            title: 'Quality First',
+                                            desc: 'Every product undergoes strict quality checks to ensure international standards are met and exceeded.'
+                                        },
+                                        {
+                                            icon: <FaLeaf className="text-3xl" />,
+                                            title: 'Sustainability',
+                                            desc: 'We are committed to sustainable sourcing and environmentally responsible practices.'
+                                        },
+                                        {
+                                            icon: <FaGlobeAmericas className="text-3xl" />,
+                                            title: 'Global Reach',
+                                            desc: 'Serving 25+ countries with efficient logistics and timely delivery worldwide.'
+                                        },
+                                        {
+                                            icon: <FaUsers className="text-3xl" />,
+                                            title: 'Partnership',
+                                            desc: 'Building long-term relationships with clients through transparency and trust.'
+                                        }
+                                    ].map((value, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: 0.8 + (index * 0.1), duration: 0.5 }}
+                                            className="flex gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300"
+                                        >
+                                            <div className="text-amber-500 flex-shrink-0">
+                                                {value.icon}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-white font-semibold mb-2">{value.title}</h4>
+                                                <p className="text-white/70 text-sm leading-relaxed">{value.desc}</p>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        {/* Stats Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.8, duration: 0.8 }}
+                            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+                        >
+                            {[
+                                { number: '50+', label: 'Products Exported' },
+                                { number: '25+', label: 'Countries Served' },
+                                { number: '100%', label: 'Quality Assured' },
+                                { number: '10+', label: 'Years Experience' }
+                            ].map((stat, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 1 + (index * 0.1), duration: 0.5 }}
+                                    className="text-center p-6 rounded-xl bg-gradient-to-br from-amber-500/10 to-transparent border border-amber-500/20 backdrop-blur-sm"
+                                >
+                                    <h3 className="text-4xl md:text-5xl font-bold text-amber-500 mb-2">{stat.number}</h3>
+                                    <p className="text-white/70 text-sm md:text-base">{stat.label}</p>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+                </div>
             </section>
 
             {/* About Section */}
